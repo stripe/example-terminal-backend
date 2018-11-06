@@ -13,7 +13,7 @@ end
 
 get '/' do
   status 200
-  return log_info("Great, your backend is set up. Now you can configure the Stripe Terminal example apps to point here.")
+  return log_info("Great, your backend is set up! Now you can configure the Stripe Terminal example apps to point here.")
 end
 
 # This endpoint is used by the example apps to retrieve a connection token
