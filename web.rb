@@ -16,7 +16,7 @@ get '/' do
   return log_info("Great, your backend is set up! Now you can configure the Stripe Terminal example apps to point here.")
 end
 
-# This endpoint is used by the example apps to retrieve a connection token
+# This endpoint is used by the example apps to retrieve a ConnectionToken
 # from Stripe.
 # iOS           https://stripe.com/docs/terminal/ios#connection-token
 # JavaScript    https://stripe.com/docs/terminal/js#connection-token
@@ -26,7 +26,7 @@ post '/connection_token' do
     token = Stripe::Terminal::ConnectionToken.create
   rescue Stripe::StripeError => e
     status 402
-    return log_info("Error creating connection token: #{e.message}")
+    return log_info("Error creating ConnectionToken: #{e.message}")
   end
 
   content_type :json
@@ -34,11 +34,31 @@ post '/connection_token' do
   token.to_json
 end
 
+# This endpoint is used by the example apps to capture a PaymentIntent.
+# iOS           https://stripe.com/docs/terminal/ios/payment#capture
+# JavaScript    https://stripe.com/docs/terminal/js/payment#capture
+# Android       Coming Soon
+post '/capture_payment_intent' do
+  begin
+    id = params["payment_intent_id"]
+    payment_intent = Stripe::PaymentIntent.retrieve(id)
+    payment_intent.capture
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error creating PaymentIntent: #{e.message}")
+  end
+
+  log_info("PaymentIntent successfully captured: #{id}")
+  # Optionally reconcile the PaymentIntent with your internal order system.
+  status 200
+  return {:intent => intent.id, :secret => intent.client_secret}.to_json
+end
+
 # This endpoint is used by the JavaScript example app to create a PaymentIntent.
 # The iOS and Android example apps create the PaymentIntent client-side
 # using the SDK.
 # https://stripe.com/docs/terminal/js/payment#create
-post '/create_intent' do
+post '/create_payment_intent' do
   begin
     intent = Stripe::PaymentIntent.create(
       :allowed_source_types => ['card_present'],
@@ -49,10 +69,10 @@ post '/create_intent' do
     )
   rescue Stripe::StripeError => e
     status 402
-    return log_info("Error creating payment intent: #{e.message}")
+    return log_info("Error creating PaymentIntent: #{e.message}")
   end
 
-  log_info("Payment Intent successfully created")
+  log_info("PaymentIntent successfully created: #{intent.id}")
   status 200
   return {:intent => intent.id, :secret => intent.client_secret}.to_json
 end
