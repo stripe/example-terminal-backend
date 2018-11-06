@@ -1,6 +1,6 @@
 # Example Terminal Backend
 
-This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to run the Stripe Terminal SDK example apps.
+This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to run the [Stripe Terminal](https://stripe.com/docs/terminal) example apps.
 
 | Platform | Example App |
 | - | - |
