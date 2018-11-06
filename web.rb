@@ -26,7 +26,7 @@ post '/connection_token' do
     token = Stripe::Terminal::ConnectionToken.create
   rescue Stripe::StripeError => e
     status 402
-    return log_info("Error creating ConnectionToken: #{e.message}")
+    return log_info("Error creating ConnectionToken! #{e.message}")
   end
 
   content_type :json
@@ -45,7 +45,7 @@ post '/capture_payment_intent' do
     payment_intent.capture
   rescue Stripe::StripeError => e
     status 402
-    return log_info("Error creating PaymentIntent: #{e.message}")
+    return log_info("Error capturing PaymentIntent! #{e.message}")
   end
 
   log_info("PaymentIntent successfully captured: #{id}")
@@ -69,7 +69,7 @@ post '/create_payment_intent' do
     )
   rescue Stripe::StripeError => e
     status 402
-    return log_info("Error creating PaymentIntent: #{e.message}")
+    return log_info("Error creating PaymentIntent! #{e.message}")
   end
 
   log_info("PaymentIntent successfully created: #{intent.id}")
