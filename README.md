@@ -14,4 +14,4 @@ To deploy this for free on Heroku, click this button:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-Then set the `backendBaseUrl` variable in our example apps to your Heroku URL (it'll be in the format https://my-example-app.herokuapp.com).
+Then set the `backendBaseUrl` variable in our example apps to the URL of your Heroku app.
