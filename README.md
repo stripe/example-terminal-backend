@@ -1,6 +1,6 @@
 # Example Terminal Backend
 
-This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to run the Stripe Terminal SDK example apps:
+This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to run the Stripe Terminal SDK example apps.
 
 | Platform | Example App |
 | - | - |
@@ -8,7 +8,7 @@ This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to
 | JavaScript | https://github.com/stripe/stripe-terminal-js |
 | Android | Coming Soon |
 
-This backend is intended for example purposes only. You'll likely want to use something more serious for your production apps.
+**Note that backend is intended for example purposes only**. You'll likely want to use something more serious for your app in production.
 
 To deploy this for free on Heroku, click this button:
 
