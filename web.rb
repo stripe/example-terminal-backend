@@ -51,7 +51,7 @@ post '/capture_payment_intent' do
   log_info("PaymentIntent successfully captured: #{id}")
   # Optionally reconcile the PaymentIntent with your internal order system.
   status 200
-  return {:intent => intent.id, :secret => intent.client_secret}.to_json
+  return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
 end
 
 # This endpoint is used by the JavaScript example app to create a PaymentIntent.
@@ -60,7 +60,7 @@ end
 # https://stripe.com/docs/terminal/js/payment#create
 post '/create_payment_intent' do
   begin
-    intent = Stripe::PaymentIntent.create(
+    payment_intent = Stripe::PaymentIntent.create(
       :allowed_source_types => ['card_present'],
       :capture_method => 'manual',
       :amount => params[:amount],
@@ -72,7 +72,7 @@ post '/create_payment_intent' do
     return log_info("Error creating PaymentIntent! #{e.message}")
   end
 
-  log_info("PaymentIntent successfully created: #{intent.id}")
+  log_info("PaymentIntent successfully created: #{payment_intent.id}")
   status 200
-  return {:intent => intent.id, :secret => intent.client_secret}.to_json
+  return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
 end
