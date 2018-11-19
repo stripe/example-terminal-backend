@@ -2,6 +2,23 @@ require 'sinatra'
 require 'stripe'
 require 'dotenv'
 require 'json'
+require 'sinatra/cross_origin'
+
+# Allow CORS To Simplify JS Example App
+configure do
+  enable :cross_origin
+end
+
+before do
+  response.headers['Access-Control-Allow-Origin'] = '*'
+end
+
+options "*" do
+  response.headers["Allow"] = "GET, POST, OPTIONS"
+  response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-User-Email, X-Auth-Token"
+  response.headers["Access-Control-Allow-Origin"] = "*"
+  200
+end
 
 Dotenv.load
 Stripe.api_key = ENV['STRIPE_TEST_SECRET_KEY']
@@ -60,6 +77,7 @@ end
 # https://stripe.com/docs/terminal/js/payment#create
 post '/create_payment_intent' do
   begin
+    puts "HELLO!!!"
     payment_intent = Stripe::PaymentIntent.create(
       :allowed_source_types => ['card_present'],
       :capture_method => 'manual',
@@ -75,4 +93,24 @@ post '/create_payment_intent' do
   log_info("PaymentIntent successfully created: #{payment_intent.id}")
   status 200
   return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
+end
+
+# This endpoint is used by the example apps to register a Reader
+# from Stripe.
+# https://stripe.com/docs/api/terminal/readers/create
+post '/register_reader' do
+  begin
+    reader = Stripe::Terminal::Reader.create(
+      :registration_code => params[:registration_code],
+      :label => params[:label]
+    )        
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error registering reader! #{e.message}")
+  end
+
+  log_info("Reader registered: #{reader.id}")
+  
+  status 200
+  return reader.to_json
 end
