@@ -114,3 +114,29 @@ post '/register_reader' do
   status 200
   return reader.to_json
 end
+
+# This endpoint is used to create a customer and save a card source to it.
+# https://stripe.com/docs/terminal/js/workflows#save-source
+post '/save_card_to_customer' do
+  begin
+    card_source = Stripe::Source.create(
+      :type => "card",
+      :card => {
+        :card_present_source => params[:card_present_source_id],
+      },
+    )
+
+    customer = Stripe::Customer.create(
+      :description => "Example Customer",
+      :source => card_source.id
+    )
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error creating customer with reusable card source! #{e.message}")
+  end
+
+  log_info("Customer created with card source: #{customer.id}")
+  
+  status 200
+  return customer.to_json
+end
