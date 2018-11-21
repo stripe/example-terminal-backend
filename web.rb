@@ -2,6 +2,25 @@ require 'sinatra'
 require 'stripe'
 require 'dotenv'
 require 'json'
+require 'sinatra/cross_origin'
+
+# Browsers require that external servers enable CORS when the server is at a different origin than the website. 
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+# This enables the requires CORS headers to allow the browser to make the requests from the JS Example App.
+configure do
+  enable :cross_origin
+end
+
+before do
+  response.headers['Access-Control-Allow-Origin'] = '*'
+end
+
+options "*" do
+  response.headers["Allow"] = "GET, POST, OPTIONS"
+  response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-User-Email, X-Auth-Token"
+  response.headers["Access-Control-Allow-Origin"] = "*"
+  200
+end
 
 Dotenv.load
 Stripe.api_key = ENV['STRIPE_TEST_SECRET_KEY']
@@ -75,4 +94,65 @@ post '/create_payment_intent' do
   log_info("PaymentIntent successfully created: #{payment_intent.id}")
   status 200
   return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
+end
+
+# This endpoint is used by the JS example app to register a Verifone P400 reader
+# to your Stripe account.
+# https://stripe.com/docs/api/terminal/readers/create
+post '/register_reader' do
+  begin
+    reader = Stripe::Terminal::Reader.create(
+      :registration_code => params[:registration_code],
+      :label => params[:label]
+    )        
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error registering reader! #{e.message}")
+  end
+
+  log_info("Reader registered: #{reader.id}")
+  
+  status 200
+  return reader.to_json
+end
+
+def lookupOrCreateExampleCustomer
+  customerEmail = "example@test.com"
+  begin
+    customerList = Stripe::Customer.list(email: customerEmail, limit: 1).data
+    if (customerList.length == 1) 
+      return customerList[0]
+    else 
+      return Stripe::Customer.create(email: customerEmail)
+    end
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error creating or retreiving customer! #{e.message}")
+  end
+end
+
+# This endpoint is used to create a customer and save a card source to it.
+# https://stripe.com/docs/terminal/js/workflows#save-source
+post '/save_card_to_customer' do
+  begin
+    card_source = Stripe::Source.create(
+      :type => "card",
+      :card => {
+        :card_present_source => params[:card_present_source_id],
+      },
+    )
+
+    customer = lookupOrCreateExampleCustomer
+    
+    customer.source = card_source.id # obtained with Stripe.js
+    customer.save
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error creating customer with reusable card source! #{e.message}")
+  end
+
+  log_info("Customer created with card source: #{customer.id}")
+  
+  status 200
+  return customer.to_json
 end
