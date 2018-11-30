@@ -22,6 +22,6 @@ Then, set the `backendBaseUrl` variable in our example apps to the URL of your H
 ```
 STRIPE_TEST_SECRET_KEY={YOUR_API_KEY}
 ```
-2. run `ruby web.rb`
+2. Run `ruby web.rb`
 
 3. The example backend should now be running at `http://localhost:4567`
