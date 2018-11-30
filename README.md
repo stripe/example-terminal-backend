@@ -15,3 +15,13 @@ To deploy this for free on Heroku, click this button:
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 Then, set the `backendBaseUrl` variable in our example apps to the URL of your Heroku app.
+
+# Running the Example Terminal Backend Locally
+
+1. Create a file nameed `.env` and add the following line
+```
+STRIPE_TEST_SECRET_KEY=[YOUR_API_KEY]
+```
+2. run `ruby web.rb`
+
+3. The example backend should now be running at `http://localhost:4567/`
