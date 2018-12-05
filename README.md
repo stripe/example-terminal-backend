@@ -14,7 +14,7 @@ To deploy this for free on Heroku, click this button:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-_Note: you may need to connect your Heroku account to GitHub for this to work_
+_Note: you may need to connect your Heroku account to GitHub for this to work._
 
 Then, set the "Backend URL" in our example apps to the URL of your Heroku app.
 
