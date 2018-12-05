@@ -10,13 +10,17 @@ This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to
 
 **Note that backend is intended for example purposes only**. You'll likely want to use something more serious for your app in production.
 
-To deploy this for free on Heroku, click this button (You may need to connect your github account to herkoku):
+To deploy this for free on Heroku, click this button:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-Then, set the `backendBaseUrl` variable in our example apps to the URL of your Heroku app.
+_Note: you may need to connect your Heroku account to GitHub for this to work_
+
+Then, set the "Backend URL" in our example apps to the URL of your Heroku app.
 
 ### Running locally
+If you prefer running the backend locally:
+
 1. Create a file named `.env` and add the following line
 ```
 STRIPE_TEST_SECRET_KEY={YOUR_API_KEY}
