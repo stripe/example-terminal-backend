@@ -2,8 +2,6 @@
 
 This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to run the [Stripe Terminal](https://stripe.com/docs/terminal) example apps.
 
-**Note that backend is intended for example purposes only**. You'll likely want to use something more serious for your app in production.
-
 1. Set up a free [Heroku account](https://signup.heroku.com). 
 
 2. Connect your Heroku account to GitHub on your Heroku [Account](https://dashboard.heroku.com/account/applications) page.
@@ -21,6 +19,8 @@ Next, navigate to one of our example apps. Follow the instructions to set up and
 | iOS | https://github.com/stripe/stripe-terminal-ios |
 | JavaScript | https://github.com/stripe/stripe-terminal-js |
 | Android | https://github.com/stripe/stripe-terminal-ios |
+
+**Note that this backend is intended for example purposes only**. You'll likely want to use something more serious for your app in production.
 
 ### Running locally
 If you prefer running the backend locally:
