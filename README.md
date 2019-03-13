@@ -12,7 +12,7 @@ This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-Next, navigate to one of our example apps. Follow the instructions to set up and run the app using the URL of your Heroku app you just deployed.
+Next, navigate to one of our example apps. Follow the instructions in the README to set up and run the app. You'll provide the URL of the example backend you just deployed.
 
 | SDK | Example App |
 |  :---  |  :---  |
