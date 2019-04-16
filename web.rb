@@ -167,7 +167,7 @@ post '/save_payment_method_to_customer' do
     )
 
     customer.refresh
-    payment_methods = Stripe::PaymentMethod.list(customer: customer.id, type: "card")
+    payment_methods = Stripe::PaymentMethod.list(customer: customer.id, type: "card", limit: 1, expand: ["data.customer"])
   rescue Stripe::StripeError => e
     status 402
     return log_info("Error attaching PaymentMethod to Customer! #{e.message}")
