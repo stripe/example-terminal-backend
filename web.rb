@@ -163,11 +163,9 @@ post '/save_payment_method_to_customer' do
 
     payment_method = Stripe::PaymentMethod.construct_from(id: params[:payment_method_id], object: "payment_method")
     payment_method = payment_method.attach(
-      customer: customer.id
+      customer: customer.id,
+      expand: ["customer"]
     )
-
-    customer.refresh
-    payment_methods = Stripe::PaymentMethod.list(customer: customer.id, type: "card", limit: 1, expand: ["data.customer"])
   rescue Stripe::StripeError => e
     status 402
     return log_info("Error attaching PaymentMethod to Customer! #{e.message}")
@@ -176,5 +174,5 @@ post '/save_payment_method_to_customer' do
   log_info("Attached PaymentMethod to Customer: #{customer.id}")
 
   status 200
-  return { customer: customer, payment_methods: payment_methods }.to_json
+  return payment_method.to_json
 end
