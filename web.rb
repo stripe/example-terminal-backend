@@ -4,7 +4,7 @@ require 'dotenv'
 require 'json'
 require 'sinatra/cross_origin'
 
-# Browsers require that external servers enable CORS when the server is at a different origin than the website. 
+# Browsers require that external servers enable CORS when the server is at a different origin than the website.
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 # This enables the requires CORS headers to allow the browser to make the requests from the JS Example App.
 configure do
@@ -24,6 +24,7 @@ end
 
 Dotenv.load
 Stripe.api_key = ENV['STRIPE_TEST_SECRET_KEY']
+Stripe.api_version = '2019-03-14'
 
 def log_info(message)
   puts "\n" + message + "\n\n"
@@ -60,8 +61,7 @@ end
 post '/capture_payment_intent' do
   begin
     id = params["payment_intent_id"]
-    payment_intent = Stripe::PaymentIntent.retrieve(id)
-    payment_intent.capture
+    payment_intent = Stripe::PaymentIntent.capture(id)
   rescue Stripe::StripeError => e
     status 402
     return log_info("Error capturing PaymentIntent! #{e.message}")
@@ -80,7 +80,7 @@ end
 post '/create_payment_intent' do
   begin
     payment_intent = Stripe::PaymentIntent.create(
-      :allowed_source_types => ['card_present'],
+      :payment_method_types => ['card_present'],
       :capture_method => 'manual',
       :amount => params[:amount],
       :currency => params[:currency] || 'usd',
@@ -104,14 +104,14 @@ post '/register_reader' do
     reader = Stripe::Terminal::Reader.create(
       :registration_code => params[:registration_code],
       :label => params[:label]
-    )        
+    )
   rescue Stripe::StripeError => e
     status 402
     return log_info("Error registering reader! #{e.message}")
   end
 
   log_info("Reader registered: #{reader.id}")
-  
+
   status 200
   return reader.to_json
 end
@@ -120,9 +120,9 @@ def lookupOrCreateExampleCustomer
   customerEmail = "example@test.com"
   begin
     customerList = Stripe::Customer.list(email: customerEmail, limit: 1).data
-    if (customerList.length == 1) 
+    if (customerList.length == 1)
       return customerList[0]
-    else 
+    else
       return Stripe::Customer.create(email: customerEmail)
     end
   rescue Stripe::StripeError => e
@@ -143,7 +143,7 @@ post '/save_card_to_customer' do
     )
 
     customer = lookupOrCreateExampleCustomer
-    
+
     customer.source = card_source.id # obtained with Stripe.js
     customer.save
   rescue Stripe::StripeError => e
@@ -152,7 +152,28 @@ post '/save_card_to_customer' do
   end
 
   log_info("Customer created with card source: #{customer.id}")
-  
+
   status 200
   return customer.to_json
+end
+
+post '/attach_payment_method_to_customer' do
+  begin
+    customer = lookupOrCreateExampleCustomer
+
+    payment_method = Stripe::PaymentMethod.attach(
+      params[:payment_method_id],
+      {
+        customer: customer.id,
+        expand: ["customer"],
+    })
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error attaching PaymentMethod to Customer! #{e.message}")
+  end
+
+  log_info("Attached PaymentMethod to Customer: #{customer.id}")
+
+  status 200
+  return payment_method.to_json
 end
