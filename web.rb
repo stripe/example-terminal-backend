@@ -157,7 +157,7 @@ post '/save_card_to_customer' do
   return customer.to_json
 end
 
-post '/save_payment_method_to_customer' do
+post '/attach_payment_method_to_customer' do
   begin
     customer = lookupOrCreateExampleCustomer
 
