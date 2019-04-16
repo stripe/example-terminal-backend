@@ -24,6 +24,7 @@ end
 
 Dotenv.load
 Stripe.api_key = ENV['STRIPE_TEST_SECRET_KEY']
+Stripe.api_version = '2019-03-14'
 
 def log_info(message)
   puts "\n" + message + "\n\n"
@@ -60,8 +61,7 @@ end
 post '/capture_payment_intent' do
   begin
     id = params["payment_intent_id"]
-    payment_intent = Stripe::PaymentIntent.retrieve(id)
-    payment_intent.capture
+    payment_intent = Stripe::PaymentIntent.capture(id)
   rescue Stripe::StripeError => e
     status 402
     return log_info("Error capturing PaymentIntent! #{e.message}")
@@ -80,7 +80,7 @@ end
 post '/create_payment_intent' do
   begin
     payment_intent = Stripe::PaymentIntent.create(
-      :allowed_source_types => ['card_present'],
+      :payment_method_types => ['card_present'],
       :capture_method => 'manual',
       :amount => params[:amount],
       :currency => params[:currency] || 'usd',
@@ -161,11 +161,12 @@ post '/save_payment_method_to_customer' do
   begin
     customer = lookupOrCreateExampleCustomer
 
-    payment_method = Stripe::PaymentMethod.construct_from(id: params[:payment_method_id], object: "payment_method")
-    payment_method = payment_method.attach(
-      customer: customer.id,
-      expand: ["customer"]
-    )
+    payment_method = Stripe::PaymentMethod.attach(
+      params[:payment_method_id],
+      {
+        customer: customer.id,
+        expand: ["customer"],
+    })
   rescue Stripe::StripeError => e
     status 402
     return log_info("Error attaching PaymentMethod to Customer! #{e.message}")
