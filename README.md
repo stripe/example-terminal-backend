@@ -6,7 +6,7 @@ This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to
 
 2. Obtain your Stripe **secret, test mode** API Key, available in the [Dashboard](https://dashboard.stripe.com/account/apikeys). Note that you must use your secret key, not your publishable key, to set up the backend. For more information on the differences between **secret** and publishable keys, see [API Keys](https://stripe.com/docs/keys). For more information on **test mode**, see [Test and live modes](https://stripe.com/docs/keys#test-live-modes).
 
-3. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Heroku application as well as your Stripe API key.
+3. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Heroku application as well as your Stripe API key. You can optionally connect the application to your GitHub account.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
