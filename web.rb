@@ -36,11 +36,30 @@ get '/' do
   return log_info("Great, your backend is set up! Now you can configure the Stripe Terminal example apps to point here.")
 end
 
-# This endpoint is used by the example apps to retrieve a ConnectionToken
-# from Stripe.
-# iOS           https://stripe.com/docs/terminal/ios#connection-token
-# JavaScript    https://stripe.com/docs/terminal/js#connection-token
-# Android       Coming Soon
+# This endpoint registers a Verifone P400 reader to your Stripe account.
+# https://stripe.com/docs/terminal/readers/connecting/verifone-p400#register-reader
+post '/register_reader' do
+  begin
+    reader = Stripe::Terminal::Reader.create(
+      :registration_code => params[:registration_code],
+      :label => params[:label]
+    )
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error registering reader! #{e.message}")
+  end
+
+  log_info("Reader registered: #{reader.id}")
+
+  status 200
+  return reader.to_json
+end
+
+# This endpoint creates a ConnectionToken, which gives the SDK permission
+# to use a reader with your Stripe account.
+# https://stripe.com/docs/terminal/sdk/js#connection-token
+# https://stripe.com/docs/terminal/sdk/ios#connection-token
+# https://stripe.com/docs/terminal/sdk/android#connection-token
 post '/connection_token' do
   begin
     token = Stripe::Terminal::ConnectionToken.create
@@ -54,29 +73,8 @@ post '/connection_token' do
   token.to_json
 end
 
-# This endpoint is used by the example apps to capture a PaymentIntent.
-# iOS           https://stripe.com/docs/terminal/ios/payment#capture
-# JavaScript    https://stripe.com/docs/terminal/js/payment#capture
-# Android       Coming Soon
-post '/capture_payment_intent' do
-  begin
-    id = params["payment_intent_id"]
-    payment_intent = Stripe::PaymentIntent.capture(id)
-  rescue Stripe::StripeError => e
-    status 402
-    return log_info("Error capturing PaymentIntent! #{e.message}")
-  end
-
-  log_info("PaymentIntent successfully captured: #{id}")
-  # Optionally reconcile the PaymentIntent with your internal order system.
-  status 200
-  return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
-end
-
-# This endpoint is used by the JavaScript example app to create a PaymentIntent.
-# The iOS and Android example apps create the PaymentIntent client-side
-# using the SDK.
-# https://stripe.com/docs/terminal/js/payment#create
+# This endpoint creates a PaymentIntent.
+# https://stripe.com/docs/terminal/payments#create
 post '/create_payment_intent' do
   begin
     payment_intent = Stripe::PaymentIntent.create(
@@ -96,26 +94,25 @@ post '/create_payment_intent' do
   return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
 end
 
-# This endpoint is used by the JS example app to register a Verifone P400 reader
-# to your Stripe account.
-# https://stripe.com/docs/api/terminal/readers/create
-post '/register_reader' do
+# This endpoint captures a PaymentIntent.
+# https://stripe.com/docs/terminal/payments#capture
+post '/capture_payment_intent' do
   begin
-    reader = Stripe::Terminal::Reader.create(
-      :registration_code => params[:registration_code],
-      :label => params[:label]
-    )
+    id = params["payment_intent_id"]
+    payment_intent = Stripe::PaymentIntent.capture(id)
   rescue Stripe::StripeError => e
     status 402
-    return log_info("Error registering reader! #{e.message}")
+    return log_info("Error capturing PaymentIntent! #{e.message}")
   end
 
-  log_info("Reader registered: #{reader.id}")
-
+  log_info("PaymentIntent successfully captured: #{id}")
+  # Optionally reconcile the PaymentIntent with your internal order system.
   status 200
-  return reader.to_json
+  return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
 end
 
+# Looks up or creates a Customer on your stripe account
+# with email "example@test.com".
 def lookupOrCreateExampleCustomer
   customerEmail = "example@test.com"
   begin
@@ -131,6 +128,8 @@ def lookupOrCreateExampleCustomer
   end
 end
 
+# This endpoint attaches a PaymentMethod to a Customer.
+# https://stripe.com/docs/terminal/payments/saving-cards#read-reusable-card
 post '/attach_payment_method_to_customer' do
   begin
     customer = lookupOrCreateExampleCustomer
