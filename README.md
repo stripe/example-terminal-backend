@@ -18,7 +18,7 @@ Next, navigate to one of our example apps. Follow the instructions in the README
 | JavaScript | https://github.com/stripe/stripe-terminal-js-demo |
 | Android | https://github.com/stripe/stripe-terminal-android |
 
-**Note that this backend is intended for example purposes only**. You'll likely want to use something more serious for your app in production.
+**Note that this backend is intended for example purposes only**. Because endpoints are not authenticated, you should not use this in production, or use your live mode API key.
 
 ### Running locally
 If you prefer running the backend locally:
