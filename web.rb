@@ -31,10 +31,10 @@ def log_info(message)
   return message
 end
 
-# get '/' do
-#   status 200
-#   send_file 'index.html'
-# end
+get '/' do
+  status 200
+  send_file 'index.html'
+end
 
 # This endpoint registers a Verifone P400 reader to your Stripe account.
 # https://stripe.com/docs/terminal/readers/connecting/verifone-p400#register-reader
