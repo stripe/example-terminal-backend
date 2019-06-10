@@ -33,7 +33,7 @@ end
 
 get '/' do
   status 200
-  return log_info("Great, your backend is set up! Now you can configure the Stripe Terminal example apps to point here.")
+  send_file 'index.html'
 end
 
 # This endpoint registers a Verifone P400 reader to your Stripe account.
