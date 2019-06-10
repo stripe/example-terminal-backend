@@ -36,9 +36,25 @@ get '/' do
   send_file 'index.html'
 end
 
+def validateApiKey
+  if Stripe.api_key.start_with?('pk')
+    return "Error: you used a publishable key to set up the example backend. Please use your test mode secret key. For more information, see https://stripe.com/docs/keys"
+  end
+  if Stripe.api_key.start_with?('sk_live')
+    return "Error: you used a live mode secret key to set up the example backend. Please use your test mode secret key. For more information, see https://stripe.com/docs/keys#test-live-modes"
+  end
+  return nil
+end
+
 # This endpoint registers a Verifone P400 reader to your Stripe account.
 # https://stripe.com/docs/terminal/readers/connecting/verifone-p400#register-reader
 post '/register_reader' do
+  validationError = validateApiKey
+  if !validationError.nil?
+    status 400
+    return log_info(validationError)
+  end
+
   begin
     reader = Stripe::Terminal::Reader.create(
       :registration_code => params[:registration_code],
@@ -61,6 +77,12 @@ end
 # https://stripe.com/docs/terminal/sdk/ios#connection-token
 # https://stripe.com/docs/terminal/sdk/android#connection-token
 post '/connection_token' do
+  validationError = validateApiKey
+  if !validationError.nil?
+    status 400
+    return log_info(validationError)
+  end
+
   begin
     token = Stripe::Terminal::ConnectionToken.create
   rescue Stripe::StripeError => e
@@ -76,6 +98,12 @@ end
 # This endpoint creates a PaymentIntent.
 # https://stripe.com/docs/terminal/payments#create
 post '/create_payment_intent' do
+  validationError = validateApiKey
+  if !validationError.nil?
+    status 400
+    return log_info(validationError)
+  end
+  
   begin
     payment_intent = Stripe::PaymentIntent.create(
       :payment_method_types => ['card_present'],
