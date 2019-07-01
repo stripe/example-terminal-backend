@@ -71,6 +71,10 @@ post '/register_reader' do
   log_info("Reader registered: #{reader.id}")
 
   status 200
+  # Note that returning the Stripe reader object directly creates a dependency between your
+  # backend's Stripe.api_version and your clients, making future upgrades more complicated.
+  # All clients must also be ready for backwards-compatible changes at any time:
+  # https://stripe.com/docs/upgrades#what-changes-does-stripe-consider-to-be-backwards-compatible
   return reader.to_json
 end
 
@@ -95,7 +99,7 @@ post '/connection_token' do
 
   content_type :json
   status 200
-  token.to_json
+  return {:secret => token.secret}.to_json
 end
 
 # This endpoint creates a PaymentIntent.
@@ -106,7 +110,7 @@ post '/create_payment_intent' do
     status 400
     return log_info(validationError)
   end
-  
+
   begin
     payment_intent = Stripe::PaymentIntent.create(
       :payment_method_types => ['card_present'],
@@ -179,5 +183,9 @@ post '/attach_payment_method_to_customer' do
   log_info("Attached PaymentMethod to Customer: #{customer.id}")
 
   status 200
+  # Note that returning the Stripe payment_method object directly creates a dependency between your
+  # backend's Stripe.api_version and your clients, making future upgrades more complicated.
+  # All clients must also be ready for backwards-compatible changes at any time:
+  # https://stripe.com/docs/upgrades#what-changes-does-stripe-consider-to-be-backwards-compatible
   return payment_method.to_json
 end
