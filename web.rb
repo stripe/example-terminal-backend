@@ -119,6 +119,7 @@ post '/create_payment_intent' do
       :currency => params[:currency] || 'usd',
       :description => params[:description] || 'Example PaymentIntent',
     )
+    log_info("Error creating PaymentIntent! #{payment_intent}")
   rescue Stripe::StripeError => e
     status 402
     return log_info("Error creating PaymentIntent! #{e.message}")
