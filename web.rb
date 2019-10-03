@@ -194,6 +194,9 @@ get '/invoices' do
   status 200
   return Stripe::Invoice.list({
     limit: 100,
+    created: {
+      gt: '1569888000',
+    },
     expand: ["data.payment_intent"]
   }).to_json
 end
