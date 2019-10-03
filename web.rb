@@ -189,3 +189,11 @@ post '/attach_payment_method_to_customer' do
   # https://stripe.com/docs/upgrades#what-changes-does-stripe-consider-to-be-backwards-compatible
   return payment_method.to_json
 end
+
+get '/invoices' do
+  status 200
+  return Stripe::Invoice.list({
+    limit: 100,
+    expand: ["data.payment_intent"]
+  }).to_json
+end
