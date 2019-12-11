@@ -118,8 +118,6 @@ post '/create_payment_intent' do
       :amount => params[:amount],
       :currency => params[:currency] || 'usd',
       :description => params[:description] || 'Example PaymentIntent',
-      :on_behalf_of => "acct_1Ea0BiIDhTzASc0a",
-      :transfer_data => { destination: "acct_1Ea0BiIDhTzASc0a" }
     )
   rescue Stripe::StripeError => e
     status 402
