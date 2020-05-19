@@ -38,7 +38,7 @@ DEPENDENCIES
   stripe (~> 4.10)
 
 RUBY VERSION
-   ruby 2.6.5p114
+   ruby 2.7.1p83
 
 BUNDLED WITH
    1.17.2

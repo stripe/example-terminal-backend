@@ -1,4 +1,4 @@
-FROM ruby:2.6.5-alpine
+FROM ruby:2.7.1-alpine
 
 RUN apk add build-base
 RUN mkdir -p /www/example-terminal-backend
