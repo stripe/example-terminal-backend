@@ -37,7 +37,7 @@ STRIPE_TEST_SECRET_KEY={YOUR_API_KEY}
 
 We have a pre-built Docker image you can run locally if you're into the convenience of containers.
 
- Install [Docker Desktop](https://www.docker.com/products/developer-tools) if you don't already have it. Then follow the steps below:
+ Install [Docker Desktop](https://www.docker.com/products/docker-desktop) if you don't already have it. Then follow the steps below:
 
 1. In your terminal, run `docker run -e STRIPE_TEST_SECRET_KEY={YOUR_API_KEY} -p 4567:4567 stripe/example-terminal-backend` (replace `{YOUR_API_KEY}` with your own test key)
 2. The example backend should now be running at `http://localhost:4567`
