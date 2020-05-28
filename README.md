@@ -20,7 +20,9 @@ This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to
 
 ### Running locally on your machine
 
-If you prefer running the backend locally, ensure you have the required Ruby runtime version installed as per the [latest Gemfile in this repo](Gemfile).
+If you prefer running the backend locally, ensure you have the required [Ruby runtime](https://www.ruby-lang.org/en/documentation/installation/) version installed as per the [latest Gemfile in this repo](Gemfile).
+
+You'll also need the correct [Bundler](https://bundler.io/) version, outlined in the [Gemfile.lock](Gemfile.lock) under the `BUNDLED_WITH` directive.
 
 Clone down this repo to your computer, and then follow the steps below:
 
