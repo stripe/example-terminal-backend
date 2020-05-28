@@ -4,6 +4,9 @@ branches:
 services:
 - docker
 
+before_install:
+  gem install bundler
+
 deploy:
   provider: script
   script: bash docker_push
