@@ -16,7 +16,7 @@ This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to
 2. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Heroku application as well as your Stripe API key.
 3. Go to the [next steps](#next-steps) in this README for how to use this app
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/stripe/example-terminal-backend)
 
 ### Running locally on your machine
 
