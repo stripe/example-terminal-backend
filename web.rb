@@ -189,3 +189,29 @@ post '/attach_payment_method_to_customer' do
   # https://stripe.com/docs/upgrades#what-changes-does-stripe-consider-to-be-backwards-compatible
   return payment_method.to_json
 end
+
+# This endpoint creates a Location.
+# https://stripe.com/docs/api/terminal/locations
+post '/create_location' do
+  validationError = validateApiKey
+  if !validationError.nil?
+    status 400
+    return log_info(validationError)
+  end
+  
+  begin
+    location = Stripe::Terminal::Location.create(
+      display_name: params[:display_name],
+      address: params[:address]
+    )
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error creating Location! #{e.message}")
+  end
+
+  log_info("Location successfully created: #{location.id}")
+
+  status 200
+  content_type :json
+  return location.to_json
+end
