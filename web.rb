@@ -61,7 +61,8 @@ post '/register_reader' do
   begin
     reader = Stripe::Terminal::Reader.create(
       :registration_code => params[:registration_code],
-      :label => params[:label]
+      :label => params[:label],
+      :location => params[:location]
     )
   rescue Stripe::StripeError => e
     status 402
@@ -188,6 +189,33 @@ post '/attach_payment_method_to_customer' do
   # All clients must also be ready for backwards-compatible changes at any time:
   # https://stripe.com/docs/upgrades#what-changes-does-stripe-consider-to-be-backwards-compatible
   return payment_method.to_json
+end
+
+# This endpoint lists the first 100 Locations. If you will have more than 100
+# Locations, you'll likely want to implement pagination in your application so that
+# you can efficiently fetch Locations as needed.
+# https://stripe.com/docs/api/terminal/locations
+get '/list_locations' do
+  validationError = validateApiKey
+  if !validationError.nil?
+    status 400
+    return log_info(validationError)
+  end
+
+  begin
+    locations = Stripe::Terminal::Location.list(
+      limit: 100
+    )
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error fetching Locations! #{e.message}")
+  end
+
+  log_info("#{locations.data.size} Locations successfully fetched")
+
+  status 200
+  content_type :json
+  return locations.data.to_json
 end
 
 # This endpoint creates a Location.
