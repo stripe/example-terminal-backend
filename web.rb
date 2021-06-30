@@ -147,6 +147,44 @@ post '/capture_payment_intent' do
   return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
 end
 
+# This endpoint creates a SetupIntent.
+# https://stripe.com/docs/api/setup_intents/create
+post '/create_setup_intent' do
+  validationError = validateApiKey
+  if !validationError.nil?
+    status 400
+    return log_info(validationError)
+  end
+
+  begin
+    setup_intent_params = {
+      :payment_method_types => params[:payment_method_types] || ['card_present'],
+    }
+
+    if !params[:customer].nil?
+      setup_intent_params[:customer] = params[:customer]
+    end
+
+    if !params[:description].nil?
+      setup_intent_params[:description] = params[:description]
+    end
+
+    if !params[:on_behalf_of].nil?
+      setup_intent_params[:on_behalf_of] = params[:on_behalf_of]
+    end
+
+    setup_intent = Stripe::SetupIntent.create(setup_intent_params)
+    
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error creating SetupIntent! #{e.message}")
+  end
+
+  log_info("SetupIntent successfully created: #{setup_intent.id}")
+  status 200
+  return {:intent => setup_intent.id, :secret => setup_intent.client_secret}.to_json
+end
+
 # Looks up or creates a Customer on your stripe account
 # with email "example@test.com".
 def lookupOrCreateExampleCustomer
