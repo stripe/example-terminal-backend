@@ -157,9 +157,23 @@ post '/create_setup_intent' do
   end
 
   begin
-    setup_intent = Stripe::SetupIntent.create({
+    setup_intent_params = {
       :payment_method_types => params[:payment_method_types] || ['card_present'],
-    })
+    }
+
+    if !params[:customer].nil?
+      setup_intent_params[:customer] = params[:customer]
+    end
+
+    if !params[:description].nil?
+      setup_intent_params[:description] = params[:description]
+    end
+
+    if !params[:on_behalf_of].nil?
+      setup_intent_params[:on_behalf_of] = params[:on_behalf_of]
+    end
+
+    setup_intent = Stripe::SetupIntent.create(setup_intent_params)
     
   rescue Stripe::StripeError => e
     status 402
