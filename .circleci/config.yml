@@ -1,0 +1,29 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@0.1.2
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  push:
+    docker:
+      - image: circleci/ruby:2.6.3-stretch-node
+    executor: ruby/default
+    steps:
+      - checkout
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - ruby/bundle-install
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  test_my_app: 
+    jobs:
+      - push:
+          filters:
+            branches:
+              only:
+                - master
