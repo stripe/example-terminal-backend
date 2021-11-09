@@ -12,6 +12,7 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Which bundler?
           command: bundle -v
