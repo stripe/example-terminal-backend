@@ -16,4 +16,8 @@ jobs:
 workflows:
   test_my_app: 
     jobs:
-      - push
+      - push:
+          filters:
+            branches:
+              only:
+                - master
