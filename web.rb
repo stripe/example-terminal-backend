@@ -84,6 +84,10 @@ end
 # https://stripe.com/docs/terminal/sdk/js#connection-token
 # https://stripe.com/docs/terminal/sdk/ios#connection-token
 # https://stripe.com/docs/terminal/sdk/android#connection-token
+#
+# The example backend does not currently support connected accounts.
+# To create a ConnectionToken for a connected account, see
+# https://stripe.com/docs/terminal/features/connect#direct-connection-tokens
 post '/connection_token' do
   validationError = validateApiKey
   if !validationError.nil?
@@ -105,6 +109,10 @@ end
 
 # This endpoint creates a PaymentIntent.
 # https://stripe.com/docs/terminal/payments#create
+#
+# The example backend does not currently support connected accounts.
+# To create a PaymentIntent for a connected account, see
+# https://stripe.com/docs/terminal/features/connect#direct-payment-intents-server-side
 post '/create_payment_intent' do
   validationError = validateApiKey
   if !validationError.nil?
