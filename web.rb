@@ -156,6 +156,23 @@ post '/capture_payment_intent' do
   return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
 end
 
+# This endpoint cancels a PaymentIntent.
+# https://stripe.com/docs/api/payment_intents/cancel
+post '/cancel_payment_intent' do
+  begin
+    id = params["payment_intent_id"]
+    payment_intent = Stripe::PaymentIntent.cancel(id)
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error canceling PaymentIntent! #{e.message}")
+  end
+
+  log_info("PaymentIntent successfully canceled: #{id}")
+  # Optionally reconcile the PaymentIntent with your internal order system.
+  status 200
+  return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
+end
+
 # This endpoint creates a SetupIntent.
 # https://stripe.com/docs/api/setup_intents/create
 post '/create_setup_intent' do
