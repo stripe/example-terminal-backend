@@ -1,7 +1,7 @@
-FROM ruby:2.7.1-alpine
+FROM ruby:3.1.2-alpine
 
 RUN apk add build-base
-RUN gem install bundler:1.17.2
+RUN gem install bundler:2.3.24
 RUN mkdir -p /www/example-terminal-backend
 WORKDIR /www/example-terminal-backend
 COPY . .
