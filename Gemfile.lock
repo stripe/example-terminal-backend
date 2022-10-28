@@ -1,46 +1,43 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    connection_pool (2.2.5)
-    dotenv (2.7.2)
-    encrypted_cookie (0.0.5)
+    dotenv (2.8.1)
+    encrypted_cookie (0.1.0)
       rack (>= 1.1, < 3)
-    faraday (0.17.4)
-      multipart-post (>= 1.2, < 3)
-    json (2.3.0)
-    multipart-post (2.1.1)
-    mustermann (1.1.1)
+    json (2.6.2)
+    mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
-    net-http-persistent (3.1.0)
-      connection_pool (~> 2.2)
-    rack (2.2.3.1)
-    rack-protection (2.2.0)
+    nio4r (2.5.8)
+    puma (6.0.0)
+      nio4r (~> 2.0)
+    rack (2.2.4)
+    rack-protection (3.0.2)
       rack
     ruby2_keywords (0.0.5)
-    sinatra (2.2.0)
-      mustermann (~> 1.0)
-      rack (~> 2.2)
-      rack-protection (= 2.2.0)
+    sinatra (3.0.2)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.0.2)
       tilt (~> 2.0)
     sinatra-cross_origin (0.4.0)
-    stripe (4.21.3)
-      faraday (~> 0.13)
-      net-http-persistent (~> 3.0)
-    tilt (2.0.10)
+    stripe (7.1.0)
+    tilt (2.0.11)
 
 PLATFORMS
-  ruby
+  arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
-  dotenv (~> 2.2)
-  encrypted_cookie (~> 0.0)
-  json (~> 2.3)
-  sinatra (~> 2.2)
+  dotenv
+  encrypted_cookie
+  json
+  puma
+  sinatra
   sinatra-cross_origin
-  stripe (~> 4.21.0)
+  stripe (~> 7.1.0)
 
 RUBY VERSION
-   ruby 2.7.1p83
+   ruby 3.1.2p20
 
 BUNDLED WITH
-   2.1.4
+   2.3.24
