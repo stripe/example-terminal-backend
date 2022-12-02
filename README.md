@@ -2,7 +2,7 @@
 
 This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to run the [Stripe Terminal](https://stripe.com/docs/terminal) example apps. To get started, you can choose from the following options:
 
-1. [Run it on a free Heroku account](#running-on-heroku)
+1. [Run it on a free Render account](#running-on-render)
 2. [Run it locally on your machine](#running-locally-on-your-machine)
 3. [Run it locally via Docker CLI](#running-locally-with-docker)
 
@@ -10,9 +10,17 @@ This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to
 
 ## Running the app
 
+### Running on Render
+
+1. Set up a free [render account](https://dashboard.render.com/register).
+2. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Render application as well as your Stripe API key.
+3. Go to the [next steps](#next-steps) in this README for how to use this app
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/stripe/example-terminal-backend/)
+
 ### Running on Heroku
 
-1. Set up a free [Heroku account](https://signup.heroku.com).
+1. Set up a [Heroku account](https://signup.heroku.com).
 2. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Heroku application as well as your Stripe API key.
 3. Go to the [next steps](#next-steps) in this README for how to use this app
 
