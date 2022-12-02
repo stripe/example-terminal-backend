@@ -2,17 +2,26 @@
 
 This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to run the [Stripe Terminal](https://stripe.com/docs/terminal) example apps. To get started, you can choose from the following options:
 
-1. [Run it on a free Heroku account](#running-on-heroku)
-2. [Run it locally on your machine](#running-locally-on-your-machine)
-3. [Run it locally via Docker CLI](#running-locally-with-docker)
+1. [Run it on a free Render account](#running-on-render)
+2. [Run it on Heroku](#running-on-heroku)
+3. [Run it locally on your machine](#running-locally-on-your-machine)
+4. [Run it locally via Docker CLI](#running-locally-with-docker)
 
 ℹ️  You also need to obtain your Stripe **secret, test mode** API Key, available in the [Dashboard](https://dashboard.stripe.com/account/apikeys). Note that you must use your secret key, not your publishable key, to set up the backend. For more information on the differences between **secret** and publishable keys, see [API Keys](https://stripe.com/docs/keys). For more information on **test mode**, see [Test and live modes](https://stripe.com/docs/keys#test-live-modes).
 
 ## Running the app
 
+### Running on Render
+
+1. Set up a free [render account](https://dashboard.render.com/register).
+2. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Render service group as well as your Stripe API key.
+3. Go to the [next steps](#next-steps) in this README for how to use this app
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/stripe/example-terminal-backend/)
+
 ### Running on Heroku
 
-1. Set up a free [Heroku account](https://signup.heroku.com).
+1. Set up a [Heroku account](https://signup.heroku.com).
 2. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Heroku application as well as your Stripe API key.
 3. Go to the [next steps](#next-steps) in this README for how to use this app
 
