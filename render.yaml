@@ -9,4 +9,3 @@ services:
     envVars:
       - key: STRIPE_TEST_SECRET_KEY
         sync: false # placeholder for a value to be added in the dashboard
-
