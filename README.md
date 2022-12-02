@@ -3,8 +3,9 @@
 This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to run the [Stripe Terminal](https://stripe.com/docs/terminal) example apps. To get started, you can choose from the following options:
 
 1. [Run it on a free Render account](#running-on-render)
-2. [Run it locally on your machine](#running-locally-on-your-machine)
-3. [Run it locally via Docker CLI](#running-locally-with-docker)
+2. [Run it on Heroku](#running-on-heroku)
+3. [Run it locally on your machine](#running-locally-on-your-machine)
+4. [Run it locally via Docker CLI](#running-locally-with-docker)
 
 ℹ️  You also need to obtain your Stripe **secret, test mode** API Key, available in the [Dashboard](https://dashboard.stripe.com/account/apikeys). Note that you must use your secret key, not your publishable key, to set up the backend. For more information on the differences between **secret** and publishable keys, see [API Keys](https://stripe.com/docs/keys). For more information on **test mode**, see [Test and live modes](https://stripe.com/docs/keys#test-live-modes).
 
