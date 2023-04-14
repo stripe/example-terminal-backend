@@ -255,6 +255,36 @@ post '/attach_payment_method_to_customer' do
   return payment_method.to_json
 end
 
+# This endpoint updates the PaymentIntent represented by 'payment_intent_id'.
+# It currently only supports updating the 'receipt_email' property.
+#
+# https://stripe.com/docs/api/payment_intents/update
+post '/update_payment_intent' do
+  payment_intent_id = params["payment_intent_id"]
+  if payment_intent_id.nil?
+    status 400
+    return log_info("'payment_intent_id' is a required parameter")
+  end
+
+  begin
+    allowed_keys = ["receipt_email"]
+    update_params = params.select { |k, _| allowed_keys.include?(k) }
+
+    payment_intent = Stripe::PaymentIntent.update(
+      payment_intent_id,
+      update_params
+    )
+
+    log_info("Updated PaymentIntent #{payment_intent_id}")
+  rescue Stripe::StripeError => e
+    status 402
+    return log_info("Error updating PaymentIntent #{payment_intent_id}. #{e.message}")
+  end
+
+  status 200
+  return {:intent => payment_intent.id, :secret => payment_intent.client_secret}.to_json
+end
+
 # This endpoint lists the first 100 Locations. If you will have more than 100
 # Locations, you'll likely want to implement pagination in your application so that
 # you can efficiently fetch Locations as needed.
