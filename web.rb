@@ -256,7 +256,7 @@ post '/attach_payment_method_to_customer' do
 end
 
 # This endpoint updates the PaymentIntent represented by 'payment_intent_id'.
-# It currently only supports updating the 'receipt_email' property.
+# It currently only supports updating the 'receipt_email' and 'application_fee_amount' properties.
 #
 # https://stripe.com/docs/api/payment_intents/update
 post '/update_payment_intent' do
@@ -267,7 +267,7 @@ post '/update_payment_intent' do
   end
 
   begin
-    allowed_keys = ["receipt_email"]
+    allowed_keys = ["receipt_email", "application_fee_amount"]
     update_params = params.select { |k, _| allowed_keys.include?(k) }
 
     payment_intent = Stripe::PaymentIntent.update(
