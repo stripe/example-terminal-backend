@@ -128,6 +128,7 @@ post '/create_payment_intent' do
       :currency => params[:currency] || 'usd',
       :description => params[:description] || 'Example PaymentIntent',
       :payment_method_options => params[:payment_method_options] || [],
+      :receipt_email => params[:receipt_email],
     )
   rescue Stripe::StripeError => e
     status 402
