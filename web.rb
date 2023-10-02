@@ -128,6 +128,7 @@ post '/create_payment_intent' do
       :currency => params[:currency] || 'usd',
       :description => params[:description] || 'Example PaymentIntent',
       :payment_method_options => params[:payment_method_options] || [],
+      :receipt_email => params[:receipt_email],
     )
   rescue Stripe::StripeError => e
     status 402
@@ -200,7 +201,7 @@ post '/create_setup_intent' do
     end
 
     setup_intent = Stripe::SetupIntent.create(setup_intent_params)
-    
+
   rescue Stripe::StripeError => e
     status 402
     return log_info("Error creating SetupIntent! #{e.message}")
@@ -320,7 +321,7 @@ post '/create_location' do
     status 400
     return log_info(validationError)
   end
-  
+
   begin
     location = Stripe::Terminal::Location.create(
       display_name: params[:display_name],
