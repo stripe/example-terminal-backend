@@ -338,3 +338,11 @@ post '/create_location' do
   content_type :json
   return location.to_json
 end
+
+get '/api/customers' do
+  return Stripe::Customer.list({limit: 3}).to_json
+end
+
+get '/api/customers/:id' do
+  return Stripe::Customer.retrieve(params[:id]).to_json
+end
