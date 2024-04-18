@@ -344,5 +344,9 @@ get '/api/customers' do
 end
 
 get '/api/customers/:id' do
-  return Stripe::Customer.retrieve(params[:id]).to_json
+  cards = Stripe::Customer.list_payment_methods(params[:id], {type: 'card'})
+  customer = Stripe::Customer.retrieve(params[:id])
+  customer['cards'] = cards.data
+
+  return customer.to_json
 end
