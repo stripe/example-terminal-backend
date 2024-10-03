@@ -145,8 +145,8 @@ end
 post '/capture_payment_intent' do
   begin
     id = params["payment_intent_id"]
-    if !params[:amount_to_capture].nil?
-      payment_intent = Stripe::PaymentIntent.capture(id, params = {:amount_to_capture => params[:amount_to_capture]})
+    if !params["amount_to_capture"].nil?
+      payment_intent = Stripe::PaymentIntent.capture(id, :amount_to_capture => params["amount_to_capture"])
     else
       payment_intent = Stripe::PaymentIntent.capture(id)
     end
