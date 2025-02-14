@@ -1,0 +1,54 @@
+mkdir backend && cd backend
+npm init -y
+npm install express sqlite3 cors body-parserconst express = require("express");
+const sqlite3 = require("sqlite3").verbose();
+const cors = require("cors");
+
+const app = express();
+const db = new sqlite3.Database("./pdv.db");
+
+app.use(express.json());
+app.use(cors());
+
+// Criar tabela de produtos
+db.run(`CREATE TABLE IF NOT EXISTS produtos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT,
+    preco REAL,
+    estoque INTEGER,
+    codigo_barras TEXT UNIQUE
+)`);
+
+// Criar tabela de vendas
+db.run(`CREATE TABLE IF NOT EXISTS vendas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    total REAL,
+    data TEXT
+)`);
+
+// Rota para listar produtos
+app.get("/produtos", (req, res) => {
+    db.all("SELECT * FROM produtos", [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+
+// Rota para adicionar um produto
+app.post("/produtos", (req, res) => {
+    const { nome, preco, estoque, codigo_barras } = req.body;
+    db.run(
+        "INSERT INTO produtos (nome, preco, estoque, codigo_barras) VALUES (?, ?, ?, ?)",
+        [nome, preco, estoque, codigo_barras],
+        function (err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ id: this.lastID });
+        }
+    );
+});
+
+// Iniciar o servidor
+app.listen(3001, () => {
+    console.log("Servidor rodando na porta 3001");
+});
+node server.js
