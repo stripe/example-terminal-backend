@@ -1,4 +1,5 @@
 # Example Terminal Backend
+⚠️ **Note that this backend is intended for example purposes only**. Because endpoints are not authenticated, you should not use this backend in production.
 
 This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to run the [Stripe Terminal](https://stripe.com/docs/terminal) example apps. To get started, you can choose from the following options:
 
@@ -66,5 +67,5 @@ Next, navigate to one of our example apps. Follow the instructions in the README
 | JavaScript | https://github.com/stripe/stripe-terminal-js-demo |
 | Android | https://github.com/stripe/stripe-terminal-android |
 
-⚠️ **Note that this backend is intended for example purposes only**. Because endpoints are not authenticated, you should not use this backend in production.
+
 
