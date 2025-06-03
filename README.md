@@ -67,5 +67,12 @@ Next, navigate to one of our example apps. Follow the instructions in the README
 | JavaScript | https://github.com/stripe/stripe-terminal-js-demo |
 | Android | https://github.com/stripe/stripe-terminal-android |
 
+If you are using the Android example app while deploying this example backend using one of the local options, you will need to update your `AndroidManifest.xml` with the following to allow connections to localhost:
 
-
+```xml
+<application
+    ...
+    android:usesCleartextTraffic="true"
+    ...
+...>
+```
