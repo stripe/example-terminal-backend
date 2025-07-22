@@ -12,22 +12,6 @@ This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to
 
 ## Running the app
 
-### Running on Render
-
-1. Set up a free [render account](https://dashboard.render.com/register).
-2. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Render service group as well as your Stripe API key.
-3. Go to the [next steps](#next-steps) in this README for how to use this app
-
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/stripe/example-terminal-backend/)
-
-### Running on Heroku
-
-1. Set up a [Heroku account](https://signup.heroku.com).
-2. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Heroku application as well as your Stripe API key.
-3. Go to the [next steps](#next-steps) in this README for how to use this app
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/stripe/example-terminal-backend)
-
 ### Running locally on your machine
 
 If you prefer running the backend locally, ensure you have the required [Ruby runtime](https://www.ruby-lang.org/en/documentation/installation/) version installed as per the [latest Gemfile in this repo](Gemfile).
@@ -54,6 +38,22 @@ We have a pre-built Docker image you can run locally if you're into the convenie
 1. In your terminal, run `docker run -e STRIPE_TEST_SECRET_KEY={YOUR_API_KEY} -p 4567:4567 stripe/example-terminal-backend` (replace `{YOUR_API_KEY}` with your own test key)
 2. The example backend should now be running at `http://localhost:4567`
 3. Go to the [next steps](#next-steps) in this README for how to use this app
+
+### Running on Render
+
+1. Set up a free [render account](https://dashboard.render.com/register).
+2. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Render service group as well as your Stripe API key.
+3. Go to the [next steps](#next-steps) in this README for how to use this app
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/stripe/example-terminal-backend/)
+
+### Running on Heroku
+
+1. Set up a [Heroku account](https://signup.heroku.com).
+2. Click the button below to deploy the example backend. You'll be prompted to enter a name for the Heroku application as well as your Stripe API key.
+3. Go to the [next steps](#next-steps) in this README for how to use this app
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/stripe/example-terminal-backend)
 
 ---
 
