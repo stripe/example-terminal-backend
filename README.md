@@ -11,6 +11,16 @@ This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to
 ℹ️  You also need to obtain your Stripe **secret, test mode** API Key, available in the [Dashboard](https://dashboard.stripe.com/account/apikeys). Note that you must use your secret key, not your publishable key, to set up the backend. For more information on the differences between **secret** and publishable keys, see [API Keys](https://stripe.com/docs/keys). For more information on **test mode**, see [Test and live modes](https://stripe.com/docs/keys#test-live-modes).
 
 ## Running the app
+If you are testing this application on a device other than `localhost` (such as a mobile phone or a Stripe card reader), you need to modify the Sinatra configuration to bind the server to all available IP addresses. By default, Sinatra only binds to `localhost`, which means that only your computer can access the app.
+
+### Steps to Modify the Configuration:
+1. Open the `web.rb` file in the project.
+2. Add or modify the following line to bind the server to `0.0.0.0`, allowing external devices to connect:
+
+   ```ruby
+   configure do
+     set :bind, '0.0.0.0'  # Bind to all available network interfaces
+   end
 
 ### Running locally on your machine
 

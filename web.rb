@@ -8,7 +8,8 @@ require 'sinatra/cross_origin'
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 # This enables the requires CORS headers to allow the browser to make the requests from the JS Example App.
 configure do
-  enable :cross_origin
+  set :bind, '0.0.0.0'  # Bind to all available network interfaces (important for testing with external devices)
+  enable :cross_origin   # Already present in your code
 end
 
 before do
