@@ -24,7 +24,7 @@ end
 
 Dotenv.load
 Stripe.api_key = ENV['STRIPE_ENV'] == 'production' ? ENV['STRIPE_SECRET_KEY'] : ENV['STRIPE_TEST_SECRET_KEY']
-Stripe.api_version = '2020-03-02'
+Stripe.api_version = '2025-11-17.clover'
 
 def log_info(message)
   puts "\n" + message + "\n\n"
