@@ -122,7 +122,7 @@ post '/create_payment_intent' do
 
   begin
     payment_intent = Stripe::PaymentIntent.create(
-      :payment_method_types => params[:payment_method_types] || ['card_present'],
+      :allowed_payment_method_types => params[:payment_method_types] || ['card_present'],
       :capture_method => params[:capture_method] || 'manual',
       :amount => params[:amount],
       :currency => params[:currency] || 'usd',
@@ -189,7 +189,7 @@ post '/create_setup_intent' do
 
   begin
     setup_intent_params = {
-      :payment_method_types => params[:payment_method_types] || ['card_present'],
+      :allowed_payment_method_types => params[:payment_method_types] || ['card_present'],
     }
 
     if !params[:customer].nil?
