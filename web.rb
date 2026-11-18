@@ -31,6 +31,27 @@ def log_info(message)
   return message
 end
 
+# Sinatra's params only include query and form-encoded values, so JSON bodies
+# are merged into params to let every endpoint accept either encoding.
+before do
+  next unless request.media_type == 'application/json'
+
+  body = request.body&.read.to_s
+  next if body.strip.empty?
+
+  begin
+    json_params = JSON.parse(body)
+  rescue JSON::ParserError => e
+    halt 400, log_info("Error parsing JSON request body! #{e.message}")
+  end
+
+  if !json_params.is_a?(Hash)
+    halt 400, log_info("Error parsing JSON request body! Expected a JSON object.")
+  end
+
+  params.merge!(json_params)
+end
+
 get '/' do
   status 200
   send_file 'index.html'
