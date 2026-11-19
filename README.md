@@ -62,6 +62,8 @@ We have a pre-built Docker image you can run locally if you're into the convenie
 
 Next, navigate to one of our example apps. Follow the instructions in the README to set up and run the app. You'll provide the URL of the example backend you just deployed.
 
+Requests to the backend can send their parameters either form-encoded (`application/x-www-form-urlencoded`) or as JSON (`application/json`).
+
 | SDK | Example App |
 |  :---  |  :---  |
 | iOS | https://github.com/stripe/stripe-terminal-ios |
