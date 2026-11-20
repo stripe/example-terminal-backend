@@ -16,7 +16,7 @@ This is a simple [Sinatra](http://www.sinatrarb.com/) webapp that you can use to
 
 If you prefer running the backend locally, ensure the following are installed:
 
-- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 3.3.4
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 3.3.14
 - [Bundler](https://bundler.io/) >= 2.5
 
 Clone down this repo to your computer, and then follow the steps below:
